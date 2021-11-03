@@ -1,0 +1,21 @@
+CI/CD Pipeline
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Stage 1	===>	stage 2	===>	stage 3	===>	stage N
+step 1		step 1		step 1		step 1
+step 2		step 2		step 2		step 2
+step 3		step 3		step 3		step 3
+...........		...........		............		............
+step n		step n 		step n		step n
+
+Stage :: A bigger block of unit that represents a stage of the software developement process. It contains a set of steps to be executed.
+[Deploy, Test, Staging, Production etc]
+Step :: A defined task that get's executed in a specific stage.
+
+To achive this we have to write Jenkins File
+JENKINS FILE(text file)
+Jenkins File is a pipeline script that is used to configure the stages and steps of a Jenkins pipeline. You can pull it with the source code or write it in Jenkins itself.
+Jenkins file will be written in groovy language
+
+
+
+

@@ -1,0 +1,58 @@
+Jenkins Installation
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+sudo yum update
+sudo su
+yum install java -y
+sudo yum install git -y
+
+https://pkg.jenkins.io/
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install epel-release
+yum install java-11-openjdk-devel
+yum install jenkins
+amazon-linux-extras install epel -y
+yum update -y
+yum install jenkins -y
+
+systemctl start jenkins
+systemctl enable jenkins
+systemctl status jenkins
+
+serarch you jenkins dashboard with public ip address of server with 8080 port no.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Set UP GitHub
+go to jenkins dashboard
+Manage Jenkins ==> Manage Credentials ==> Jenkins ==> Global Credentials ==> set your github userid and password
+
+Now go to dashboard
+New item ==> freestyle(chatapp) ==> ok 
+
+Now create a backend.pem file in jenkins server and paste your pem file content there and save it.
+
+sudo cp /home/ec2-user/backend.pem /var/lib/jenkins/
+sudo chown jenkins:jenkins backend.pem
+sudo chmod 400 backend.pem
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Go to Dashboard create chatapp freestyle job
+give your git link there
+and in build choose shell execution
+
+Execute in shell
+rsync -avz -e 'ssh -i /var/lib/jenkins/backend.pem' /var/lib/jenkins/workspace/Chatapp ubuntu@172.31.42.133:
+
+rsync -avz -e 'ssh -i /var/lib/jenkins/backend.pem' /var/lib/jenkins/workspace/Chatapp ubuntu@172.31.42.133:~
+ssh -i /var/lib/jenkins/backend.pem ubuntu@172.31.42.133 'sudo systemctl restart gunicorn.service'
+
+
+
+
+
+
+
+
+
+
+

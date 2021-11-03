@@ -1,0 +1,90 @@
+Installation of Jenkins
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+sudo apt update
+sudo apt-get install openjdk-8-jdk -y
+java -version
+
+https://pkg.jenkins.io/debian-stable/
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+sudo vi /etc/apt/sources.list
+add below line in the last line of this file.
+deb https://pkg.jenkins.io/debian.stable binary/
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt install openjdk-11-jdk -y
+java -version
+sudo su
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
+copy both below lines in a single time 
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
+e>     /etc/apt/sources.list.d/jenkins.list'
+
+Certificate verification failed: The certificate is NOT trusted. for the same error run the below command
+sudo apt install ca-certificates
+
+sudo apt-get update -y
+sudo apt-get install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+Accessing Jenkins from Browser
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now copy public IP of your Jenkins server and use with port 8080 on your browser
+34.229.84.41:8080
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+79999126396f4061bfe5363e6243ffe0
+and paste it into the Administrator password on jenkins web console
+Install sugested plugins for new commers
+provide the necessary details
+username : jenkins
+password : jenkins123
+save and finish
+start using jenkins
+
+
+Master-Slave Architecture
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now create Master-Slave Architecture
+got to 
+Manage Jenkins
+configure global security
+now go to agents =====> agents means slave node
+choose random and save
+go to manage nodes and cloud
+Add new node ===> go to new node and Set a name Agent 1
+select permanent node and ok
+put /home/ubuntu/jenkins
+
+click on node which you created and Run from agent command line:
+and download agent.jar file from there
+
+Add new node and create the same for Agent 2
+
+Agent 1 and Agent 2 Configuration
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now we are goint to transfer our agent.jar file to agent 1 and agent 2 with the help of ssh key 
+
+login to Agent 1 and Agent 2 and install jdk 
+sudo apt update -y
+sudo apt install openjdk-8-jdk -y
+then
+Two things we need in same folder which is following
+1 agent.jar file
+2 pem file
+
+Now open gitbash here
+for Agent 1 : scp -i ./virginia.pem agent.jar ubuntu@3.84.219.71:/home/ubuntu/
+for Agent 2 : scp -i ./virginia.pem agent.jar ubuntu@34.239.126.70:/home/ubuntu/
+
+No Go To Agent 1 in jenkins browser
+Run from agent command line in Agent 1 and Agent 2
+java -jar agent.jar -jnlpUrl http://34.229.84.41:8080/computer/Agent%201/jenkins-agent.jnlp -secret 6cca2647c0dbee0583a96fcf826b9d86bb9a837dbfa4b94b4ebe0781298e9819 -workDir "/home/ubuntu/jenkins"
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ 
+
+
+
